@@ -32,4 +32,31 @@ app.get('/getMusic', async (c) => {
   return c.json({ data: items, list_complete, nextCursor });
 })
 
+app.get('/getMusic1', async (c) => {
+  const listOptions = {
+    prefix: 'audio',
+  };
+  const { keys, list_complete } = await c.env.INFO.list(listOptions);
+
+  return c.json({ keys, list_complete });
+})
+
+app.get('/getMusic2', async (c) => {
+  const listOptions = {
+
+  };
+  const { keys, list_complete } = await c.env.INFO.list(listOptions);
+
+  return c.json({ keys, list_complete });
+})
+
+app.get('/getMusicInfoByKey', async (c) => {
+  const { key } = c.req.query(); // 解构获取参数
+  if (!key) {
+    return c.json({ success: false, message: '请传入key' })
+  }
+  const data = await c.env.INFO.get(key);
+  return c.json({ data });
+})
+
 export default app
